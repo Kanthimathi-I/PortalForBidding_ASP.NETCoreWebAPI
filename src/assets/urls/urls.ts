@@ -6,7 +6,7 @@ export const urls = {
     updateProductUrl: 'http://localhost:8080/farmerTable/update',
     deleteProductUrl:'http://localhost:8080/farmerTable/delete/',
 
-    // farmer urls
+    // farmer urls 
     farmerProfileUrl: 'http://localhost:8080/farmerTable/farmerInfo',
 
     // consumer urls
