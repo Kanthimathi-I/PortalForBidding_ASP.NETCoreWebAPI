@@ -1,0 +1,33 @@
+.example-spacer {
+  flex: 1 1 auto;
+}
+
+.example-tab-icon {
+  margin-right: 8px;
+}
+
+table {
+  width: 100%;
+}
+
+.mat-mdc-form-field {
+  font-size: 14px;
+  width: 100%;
+}
+
+td{
+  width: 25%;
+  /* text-align: right; */
+}
+th{
+  width: 25%;
+  /* text-align: right; */
+}
+
+.mat-header-cell:nth-child(even){
+  background-color: red;
+}
+      
+/* .mat-cell:nth-child(odd){
+  background-color: black;
+} */

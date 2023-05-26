@@ -1,0 +1,46 @@
+<h1 mat-dialog-title>Bid for product </h1>
+
+<div mat-dialog-content color="accent">
+    <p>Give your Details below</p>
+    <form [formGroup]="consumerForm" color="accent">
+
+        <!-- consumer name -->
+        <mat-form-field appearance="fill">
+            <mat-label>Consumer Name</mat-label>
+            <input formControlName="consumerName" matInput type="text" placeholder="Name" required>
+            <mat-hint>Give your Full Name</mat-hint>
+        </mat-form-field>
+
+        <!-- consumer mail id -->
+        <mat-form-field appearance="fill">
+            <mat-label>Mail ID</mat-label>
+            <input formControlName="consumerMail" matInput type="email" placeholder="email address" required>
+            <mat-hint>Valid mail ID</mat-hint>
+        </mat-form-field>
+
+        <!-- product id -->
+        <mat-form-field>
+            <input formControlName="id" matInput type="number" placeholder="{{item.id}}">
+            <mat-hint>The product id</mat-hint>
+        </mat-form-field>
+        
+        <!-- base price -->
+        <mat-form-field appearance="fill">
+            <mat-label>Bidding Price</mat-label>
+            <input formControlName="consumerBidPrice" matInput type="number" placeholder="Price">
+            <mat-hint>Price must be above {{item.product_base_price}} for this product</mat-hint>
+        </mat-form-field>
+
+        <!-- <button mat-raised-button color="warn" mat-dialog-close="">Close</button>
+        <button mat-raised-button color="accent" formControlName="statusBid" (click)="confirmBid()"
+            [disabled]="!(consumerForm.valid)">Confirm Bid</button> -->
+    </form>
+</div>
+
+<div mat-dialog-actions [align]="'end'">
+    <form [formGroup]="consumerForm"> 
+        <button mat-raised-button color="warn" mat-dialog-close="">Close</button>
+        <button mat-raised-button color="accent" (click)="confirmBid()"
+            [disabled]="!(consumerForm.valid)">Confirm Bid</button>
+    </form>
+</div>

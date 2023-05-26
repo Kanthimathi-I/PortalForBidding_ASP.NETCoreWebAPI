@@ -1,0 +1,258 @@
+<body>
+  <section>
+    <button mat-button color="primary" routerLink="" (click)="loader()">
+      <mat-icon class="example-tab-icon">arrow_back</mat-icon>
+      <span class="example-spacer">back to Home</span>
+    </button>
+    <span class="example-spacer"><b>FARMER PORTAL</b></span>
+  </section>
+
+  <mat-tab-group>
+    <!-- 1.product list in farmer -->
+    <mat-tab>
+      <ng-template mat-tab-label>
+        <mat-icon class="example-tab-icon">library_add</mat-icon>
+        Product
+      </ng-template>
+      <!-- 1. Product list content -->
+      <mat-toolbar>
+        <mat-icon color="primary">view_list</mat-icon>
+        <span>Product List</span>
+        <span class="example-spacer"></span>
+        <button mat-fab color="primary" (click)="openDialog()" aria-label="Example icon button with a add icon">
+          <mat-icon>add</mat-icon>
+        </button>
+      </mat-toolbar>
+      <!-- product list -->
+      <div class="container">
+        <div class="full"> <br>
+          <mat-form-field>
+            <mat-label>Filter</mat-label>
+            <input matInput (keyup)="applyFilter($event)" placeholder="Ex. carrot" #input>
+          </mat-form-field>
+          <div class="mat-elevation-z8">
+            <!-- table -->
+            <table mat-table [dataSource]="dataSource" matSort>
+
+              <!-- ID -->
+              <ng-container matColumnDef="id">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> ID </th>
+                <td mat-cell *matCellDef="let row"> {{row.id}} </td>
+              </ng-container>
+
+              <!-- Farmer Name Column -->
+              <ng-container matColumnDef="farmerName">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Farmer Name </th>
+                <td mat-cell *matCellDef="let row"> {{row.farmerName}} </td>
+              </ng-container>
+
+              <!-- Farmer Mail ID Column -->
+              <ng-container matColumnDef="farmerMail">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Farmer Mail ID </th>
+                <td mat-cell *matCellDef="let row"> {{row.farmerMailId}} </td>
+              </ng-container>
+
+              <!-- Product Name Column -->
+              <ng-container matColumnDef="productName">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Product Name </th>
+                <td mat-cell *matCellDef="let row"> {{row.productName}} </td>
+              </ng-container>
+
+              <!-- Product category Column -->
+              <ng-container matColumnDef="productCategory">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Product Category </th>
+                <td mat-cell *matCellDef="let row"> {{row.productCategory}} </td>
+              </ng-container>
+
+              <!-- Product Quantity Column -->
+              <ng-container matColumnDef="productQuantity">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Product Quantity(Kg) </th>
+                <td mat-cell *matCellDef="let row"> {{row.productQuantity}} </td>
+              </ng-container>
+
+              <!-- Product Price Column -->
+              <ng-container matColumnDef="productBasedPrice">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Product Price </th>
+                <td mat-cell *matCellDef="let row"> {{row.productBasePrice | currency:'INR':'symbol'}} </td>
+              </ng-container>
+
+              <!-- Bidding Status Column -->
+              <ng-container matColumnDef="productStatus">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Bidding Status </th>
+                <td mat-cell *matCellDef="let row"> {{row.status}} </td>
+              </ng-container>
+
+              <ng-container matColumnDef="action">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Action</th>
+                <td mat-cell *matCellDef="let row">
+                  <button mat-icon-button color="primary" (click)="editProduct(row)">
+                    <mat-icon>edit</mat-icon>
+                  </button>
+                  <button mat-icon-button color="warn" (click)="deleteProduct(row.id)">
+                    <mat-icon>delete</mat-icon>
+                  </button>
+                </td>
+              </ng-container>
+
+              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+              <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+              <!-- Row shown when there is no matching data. -->
+              <tr class="mat-row" *matNoDataRow>
+                <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
+              </tr>
+            </table>
+
+            <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page of users"></mat-paginator>
+          </div>
+        </div>
+      </div> <br><br>
+    </mat-tab>
+
+    <!-- 2. Bidded product -->
+    <mat-tab>
+      <ng-template mat-tab-label>
+        <mat-icon class="example-tab-icon">playlist_add_check</mat-icon>
+        Bidded Product
+      </ng-template>
+      <!-- Content 2 toolbar-->
+      <mat-toolbar>
+        <mat-icon color="primary"> list_alt</mat-icon>
+        <span>Bidded Product List</span>
+        <span class="example-spacer"></span>
+      </mat-toolbar>
+      <!-- bidded product list with consumer info -->
+      <div class="container-fluid"> <br>
+        <mat-form-field>
+          <mat-label>Filter</mat-label>
+          <input matInput (keyup)="applyFilter1($event)" placeholder="Ex. carrot" #input1>
+        </mat-form-field>
+        <div class="">
+          <table mat-table [dataSource]="dataSource1" matSort #historyTb="matSort">
+            <ng-container matColumnDef="farmerName">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> Farmer Name </th>
+              <td mat-cell *matCellDef="let row"> {{row.farmerName}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="farmerMail">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> Farmer Mail ID </th>
+              <td mat-cell *matCellDef="let row"> {{row.farmerMailId}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="productName">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> Product Name </th>
+              <td mat-cell *matCellDef="let row"> {{row.productName}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="productCategory">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> Product Category </th>
+              <td mat-cell *matCellDef="let row"> {{row.productCategory}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="productQuantity">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> Product Quantity (Kg) </th>
+              <td mat-cell *matCellDef="let row"> {{row.productQuantity}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="productBasePrice">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> Product Base price </th>
+              <td mat-cell *matCellDef="let row"> {{row.productBasePrice}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="consumerName">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> Consumer Name </th>
+              <td mat-cell *matCellDef="let row"> {{row.consumerName}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="consumerMailID">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> Consumer Name </th>
+              <td mat-cell *matCellDef="let row"> {{row.consumerMailId}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="biddedPrice">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> Bidded Price </th>
+              <td mat-cell *matCellDef="let row"> {{row.biddedPrice | currency:'INR':'symbol' }} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="action">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> Action </th>
+              <td mat-cell *matCellDef="let row">
+                <div class="flex justify-content-center gap-2">
+                  <p-toast></p-toast>
+                  <p-confirmDialog [style]="{width: '50vw'}"></p-confirmDialog>
+                  <p-button mat-raised-button (click)="confirm1(row.farmer_id)" icon="pi pi-check" label="Accept"></p-button>
+                  <p-button (click)="confirm2(row)" icon="pi pi-times" label="Reject" class="p-button-danger"></p-button>
+                </div>
+              </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns1"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns1;"></tr>
+
+            <!-- Row shown when there is no matching data. -->
+            <tr class="mat-row" *matNoDataRow>
+              <td class="mat-cell" colspan="4">No data matching the filter "{{input1.value}}"</td>
+            </tr>
+          </table>
+
+          <mat-paginator #paginatorFirst [pageSizeOptions]="[5, 10, 25, 100]"
+            aria-label="Select page of users"></mat-paginator>
+
+        </div> <br><br>
+
+      </div>
+    </mat-tab>
+
+    <!-- 3. Farmer's Profile -->
+
+    <mat-tab>
+      <ng-template mat-tab-label>
+        <mat-icon class="example-tab-icon">account_circle</mat-icon>
+        Farmer Profile
+      </ng-template>
+      <!-- farmer profile details -->
+      <mat-toolbar>
+        <mat-icon color="primary">supervisor_account</mat-icon>
+        <span>Bidded Product List</span>
+        <span class="example-spacer"></span>
+      </mat-toolbar>
+      <div class="container-fluid"> <br>
+        <mat-form-field>
+          <mat-label>Filter</mat-label>
+          <input matInput (keyup)="applyFilter2($event)" placeholder="Ex. farmer" #input2>
+        </mat-form-field>
+        <div class="mat-elevation-z8">
+          <table mat-table [dataSource]="dataSource2" matSort #farmerTb="matSort">
+
+            <ng-container matColumnDef="farmerName">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> Farmer Name </th>
+              <td mat-cell *matCellDef="let row"> {{row.farmer_Name}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="farmerMail">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> Farmer Mail ID </th>
+              <td mat-cell *matCellDef="let row"> {{row.farmer_MailId}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="noOfProducts">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> No of Products </th>
+              <td mat-cell *matCellDef="let row"> {{row.no_of_Products}} </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns2"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns2;"></tr>
+
+            <!-- Row shown when there is no matching data. -->
+            <tr class="mat-row" *matNoDataRow>
+              <td class="mat-cell" colspan="4">No data matching the filter "{{input2.value}}"</td>
+            </tr>
+          </table>
+          <mat-paginator #paginatorSecond [pageSizeOptions]="[5, 10, 25, 100]"
+            aria-label="Select page of users"></mat-paginator>
+
+        </div> <br><br>
+      </div>
+
+    </mat-tab>
+  </mat-tab-group>
+</body>

@@ -1,0 +1,70 @@
+<h1 mat-dialog-title>Add Product Form</h1>
+
+<div mat-dialog-content>
+    <form [formGroup]="farmerForm">
+        <!-- farmer name -->
+        <mat-form-field appearance="fill">
+            <mat-label>Farmer Name</mat-label>
+            <input formControlName="farmerName" matInput type="text" placeholder="Name" required>
+            <mat-hint>Give your Full Name</mat-hint>
+            <!-- <mat-error *ngIf="framerForm.controls.farmerName.touched && framerForm.controls.name.invalid">
+                <span *ngIf="framerForm.controls.farmerName.required">This field is mandatory</span>
+                <span *ngIf="framerForm.controls.farmerName.errors.pattern">This field is invalid</span>
+            </mat-error> -->
+        </mat-form-field>
+
+        <!-- farmer mail id -->
+        <mat-form-field appearance="fill">
+            <mat-label>Mail ID</mat-label>
+            <input formControlName="farmerMail" matInput type="email" placeholder="email address">
+            <mat-hint>Valid mail ID</mat-hint>
+        </mat-form-field>
+
+        <!-- product name -->
+        <mat-form-field appearance="fill">
+            <mat-label>Product Name</mat-label>
+            <input formControlName="productName" matInput type="text" placeholder="Product">
+            <mat-hint>Name of the product</mat-hint>
+        </mat-form-field>
+
+        <!-- product category -->
+        <mat-form-field>
+            <mat-label>Product Category</mat-label>
+            <mat-select formControlName="productCategory" placeholder="category">
+                <mat-option value="fruit">fruit</mat-option>
+                <mat-option value="vegetable">vegetable</mat-option>
+                <mat-option value="cereals">cereals</mat-option>
+            </mat-select>
+            <mat-hint>select any category</mat-hint>
+        </mat-form-field>
+
+        <!-- product quality -->
+        <mat-form-field appearance="fill">
+            <mat-label>Product Quantity</mat-label>
+            <input formControlName="productQuantity" matInput type="number" placeholder="Quantity">
+            <mat-hint>Quantity of the product</mat-hint>
+        </mat-form-field>
+
+        <!-- base price -->
+        <mat-form-field appearance="fill">
+            <mat-label>Product Base Price</mat-label>
+            <input formControlName="productBasePrice" matInput type="number" placeholder="Price">
+            <mat-hint>Base price for the given quantity</mat-hint>
+        </mat-form-field>
+
+        <!-- Bidding status -->
+        <mat-form-field>
+            <mat-label>Bidding Status</mat-label>
+            <mat-select formControlName="productStatus" placeholder="Status">
+                <mat-option value="bidded">bidded</mat-option>
+                <mat-option value="not yet bidded">not yet bidded</mat-option>
+            </mat-select>
+            <mat-hint>select any category</mat-hint>
+        </mat-form-field>
+    </form>
+</div>
+
+<div mat-dialog-actions [align]="'end'">
+    <button mat-raised-button color="warn" mat-dialog-close="">Close</button>
+    <button mat-raised-button color="primary" (click)="addProduct()" [disabled]="!(farmerForm.valid && farmerForm.dirty)">{{actionBtn}}</button>
+</div>
